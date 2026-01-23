@@ -13,23 +13,22 @@ drive_base = DriveBase(
     left_motor,
     right_motor,
     wheel_diameter=56,
-    axle_track=112
+    axle_track=152
 )
 
 left_sensor = ColorSensor(Port.C)
 right_sensor = ColorSensor(Port.D)
 
-speed = 30
-kp = 1
-kd = 5
-perror = 0
-distance = 10000
-left_motor.reset_angle()
-while left_motor.angle() < distance:
-    error = left_sensor.reflection() - right_sensor.reflection()
-    p = error * kp
-    d = (error - perror) * kd
-    left_motor.dc(speed + (p+d))
-    right_motor.dc(speed - (p+d))
-    perror = error #update previous error
-drive_base.stop()
+def line_track(speed: double, kp: double, kd: double, distance: double):
+    perror = 0
+    left_motor.reset_angle()
+    while left_motor.angle() < distance:
+        error = left_sensor.reflection() - right_sensor.reflection()
+        p = error * kp
+        d = (error - perror) * kd
+        left_motor.dc(speed - (p+d))
+        right_motor.dc(speed + (p+d))
+        perror = error
+    drive_base.stop()
+
+line_track(speed=80,kp=0.5,kd=3,distance=1000)
