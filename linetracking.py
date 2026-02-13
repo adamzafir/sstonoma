@@ -13,12 +13,12 @@ def line_track_distance(maxspeed: double, kp: double, kd: double, distance: doub
         left_motor.dc(speed + (p+d))
         right_motor.dc(speed - (p+d))
         perror = error
-        if speed < 45:
+        if speed < 55:
             speed *= 1.004
             print(speed)
         elif speed < maxspeed:
-            print("speed MORE then 55")
-            speed += 1.2
+            # print("speed MORE then 55")
+            speed += 1.1
             print(speed)
     drive_base.stop()
 
@@ -36,10 +36,10 @@ def line_track_t(maxspeed: double, kp: double, kd: double):
         right_motor.dc(speed + (p+d))
         perror = error
         if speed < 45:
-            speed *= 1.004
+            speed *= 1.0038
             print(speed)
         elif speed < maxspeed:
             print("speed MORE then 55")
-            speed += 1.2
+            speed += 1.1
             print(speed)
     drive_base.stop()

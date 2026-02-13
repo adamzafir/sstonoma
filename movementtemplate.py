@@ -272,3 +272,6 @@ def _PD_Track(side, power, threshold):
     left_motor.dc(power + PD_Power)
     right_motor.dc(power - PD_Power)
     PD_Error_Old = PD_Error_New
+
+#Gyro_Reset(0)
+#gyro_turn(180,50,0,0)
