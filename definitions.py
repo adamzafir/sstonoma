@@ -5,6 +5,7 @@ from pybricks.robotics import DriveBase
 from pybricks.tools import wait, StopWatch
 
 THRESHOLD = 50
+speed = 0
 hub = PrimeHub()
 left_sensor = ColorSensor(Port.C)
 right_sensor = ColorSensor(Port.D)
@@ -56,3 +57,11 @@ Gyro_Turn_Error = 0
 _Move_Power = 0
 Move_Delta = 0
 Bolt_Feeding_Rotation_Angle = 0
+
+def decelerate_to_stop(seconds):
+    deceleration = speed/max(1, seconds*1000)
+    while speed > 0:
+        left_motor.dc(speed)
+        right_motor.dc(speed)
+        speed -= deceleration
+        wait(0.001)
