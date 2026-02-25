@@ -1,9 +1,8 @@
 from definitions import *
-after_speed = 0
-initialspeed = 0
-speed = 0
+
 #line track for distance
-def line_track_distance(maxspeed: double, kp: double, kd: double, distance: double):
+def line_track_distance(maxspeed: float, kp: float, kd: float, distance: float, stop: bool):
+    global speed
     perror = 0
     left_motor.reset_angle()
     initialspeed = 10
@@ -21,14 +20,21 @@ def line_track_distance(maxspeed: double, kp: double, kd: double, distance: doub
         elif speed < maxspeed:
             speed += 1.15
             print(speed)
+    if stop:
+        pass
+        #drive_base.stop()
+        #decelerate_to_stop(0.2)
 
 #line track for T junction
-def line_track_junction_both(minspeed: double, kp: double, kd: double):
+def line_track_junction_both(minspeed: float, kp: float, kd: float):
+    global speed
     perror = 0
     left_motor.reset_angle()
-    initialspeed = 100
-    speed = initialspeed
-    while not(left_sensor.reflection() < THRESHOLD/3 and right_sensor.reflection() < THRESHOLD/3):
+    speed = 100
+    while not(
+        left_sensor.reflection() < THRESHOLD/2 and 
+        right_sensor.reflection() < THRESHOLD/2
+    ):
         error = left_sensor.reflection() - right_sensor.reflection()
         p = error * kp
         d = (error - perror) * kd
@@ -40,12 +46,15 @@ def line_track_junction_both(minspeed: double, kp: double, kd: double):
             print(speed)
 
 #line track for left junction
-def line_track_junction_left(minspeed: double, kp: double, kd: double):
+def line_track_junction_left(minspeed: float, kp: float, kd: float):
+    global speed
     perror = 0
     left_motor.reset_angle()
-    initialspeed = 90
-    speed = initialspeed
-    while not(left_sensor.reflection() < THRESHOLD/3 and right_sensor.reflection() > (2*THRESHOLD)-(THRESHOLD/3)):
+    speed = 0.9*speed
+    while not(
+        left_sensor.reflection() < THRESHOLD/2 and 
+        right_sensor.reflection() > (2*THRESHOLD)-(THRESHOLD/2)
+    ):
         error = left_sensor.reflection() - right_sensor.reflection()
         p = error * kp
         d = (error - perror) * kd
@@ -57,12 +66,15 @@ def line_track_junction_left(minspeed: double, kp: double, kd: double):
             print(speed)
 
 #line track for right junction
-def line_track_junction_right(minspeed: double, kp: double, kd: double):
+def line_track_junction_right(minspeed: float, kp: float, kd: float):
+    global speed
     perror = 0
     left_motor.reset_angle()
-    initialspeed = 90
-    speed = initialspeed
-    while not(left_sensor.reflection() > (2*THRESHOLD)-(THRESHOLD/3)) and right_sensor.reflection() < THRESHOLD/3:
+    speed = 0.9*speed
+    while not(
+        left_sensor.reflection() > (2*THRESHOLD)-(THRESHOLD/2) and 
+        right_sensor.reflection() < THRESHOLD/2
+    ):
         error = left_sensor.reflection() - right_sensor.reflection()
         p = error * kp
         d = (error - perror) * kd
@@ -72,3 +84,4 @@ def line_track_junction_right(minspeed: double, kp: double, kd: double):
         if speed > minspeed:
             speed -= 0.2
             print(speed)
+        drive_base.stop()
