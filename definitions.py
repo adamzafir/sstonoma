@@ -10,7 +10,7 @@ hub = PrimeHub()
 left_sensor = ColorSensor(Port.C)
 right_sensor = ColorSensor(Port.D)
 Object_Color_Detection = ColorSensor(Port.E)
-# Object_Color_Detection.detectable_colors((Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN))
+Object_Color_Detection.detectable_colors((Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN))
 All_Time = StopWatch()
 Time_01 = StopWatch()
 Gyro_Time_ = StopWatch()
@@ -18,9 +18,8 @@ left_motor = Motor(Port.B, Direction.COUNTERCLOCKWISE)
 right_motor = Motor(Port.A, Direction.CLOCKWISE)
 grabby_thingie = Motor(Port.F, Direction.COUNTERCLOCKWISE)
 drive_base = DriveBase(left_motor, right_motor, 62.4, 175)
-Program_Overview_left = 'The left side is the core motor control command area; do not make any changes'
-Program_Overview_right = 'The right side is the main program; please set the basic parameters first'
-Default_Value__Adjustable_ = 'This is just an explanation and can be ignored.'
+
+
 Black_Line_Value = 20
 White_Line_Value = 70
 PD_KP = 0.3
@@ -32,8 +31,7 @@ Gyro_KD__Dual_Motor_Movement_ = 80
 Gyro_Move_KP = 6
 Gyro_Move_KD = 60
 Gyro_Time = 1000
-Gray_Value = 60
-Default_Value__Not_Adjustable_ = 'This is just an explanation and can be ignored.'
+Gray_Value = 6
 Payload = 0
 Payload_at_Distance_01 = 0
 Payload_at_Distance_02 = 0
